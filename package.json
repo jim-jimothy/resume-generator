@@ -1,0 +1,50 @@
+{
+  "name": "resume-pdf-generator",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Generate ATS-compliant PDF resumes from JSON",
+  "bin": {
+    "resume-pdf": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist/",
+    "templates/",
+    "examples/"
+  ],
+  "scripts": {
+    "build": "node build.mjs && chmod +x dist/index.js",
+    "dev": "node --experimental-strip-types src/cli/index.ts",
+    "test": "vitest",
+    "test:ci": "vitest run --coverage",
+    "lint": "eslint src/ --ext .ts",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "ajv-formats": "^3.0.1",
+    "chalk": "^5.3.0",
+    "commander": "^11.0.0",
+    "fs-extra": "^11.2.0",
+    "handlebars": "^4.7.8",
+    "ora": "^7.0.1",
+    "playwright": "^1.40.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "esbuild": "^0.19.0",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
