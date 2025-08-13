@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Generate ATS-compliant PDF resumes from JSON",
   "bin": {
-    "resume-pdf": "./dist/index.js"
+    "resume-gen": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "exports": {
