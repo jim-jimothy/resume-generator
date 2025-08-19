@@ -360,7 +360,8 @@ describe('Update Command', () => {
         ]
       };
       
-      await expect(updateCommand(testResumeFile, options)).resolves.not.toThrow();
+      // Should not throw an error for valid updates
+      await expect(updateCommand(testResumeFile, options)).resolves.toBeUndefined();
     });
   });
 

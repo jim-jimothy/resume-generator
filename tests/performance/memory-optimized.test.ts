@@ -42,7 +42,7 @@ describe('Memory Optimized Performance', () => {
   });
 
   afterAll(async () => {
-    await browserPool.shutdown();
+    // Don't shut down browser pool as other tests might need it
     templateCache.clear();
     
     if (global.gc) {
@@ -94,8 +94,7 @@ describe('Memory Optimized Performance', () => {
       await new Promise(resolve => setTimeout(resolve, 50));
     }
 
-    // Final cleanup
-    await browserPool.shutdown();
+    // Final cleanup (don't shutdown browser pool)
     templateCache.clear();
     
     if (global.gc) {

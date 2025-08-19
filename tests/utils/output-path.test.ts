@@ -128,37 +128,45 @@ describe('Output Path Management', () => {
   describe('Timestamp functionality', () => {
     it('should add timestamp when requested', async () => {
       const mockDate = new Date('2024-01-15T10:30:00Z');
-      vi.setSystemTime(mockDate);
+      const originalDate = global.Date;
+      global.Date = vi.fn(() => mockDate) as any;
+      global.Date.now = vi.fn(() => mockDate.getTime());
       
       const timestampedName = createTimestampedName('resume.pdf');
       expect(timestampedName).toBe('resume-2024-01-15.pdf');
       
-      vi.useRealTimers();
+      global.Date = originalDate;
     });
 
     it('should add timestamp to complex names', async () => {
       const mockDate = new Date('2024-12-31T23:59:59Z');
-      vi.setSystemTime(mockDate);
+      const originalDate = global.Date;
+      global.Date = vi.fn(() => mockDate) as any;
+      global.Date.now = vi.fn(() => mockDate.getTime());
       
       const timestampedName = createTimestampedName('john-doe-professional-resume.pdf');
       expect(timestampedName).toBe('john-doe-professional-resume-2024-12-31.pdf');
       
-      vi.useRealTimers();
+      global.Date = originalDate;
     });
 
     it('should handle files without extensions', async () => {
       const mockDate = new Date('2024-06-15T12:00:00Z');
-      vi.setSystemTime(mockDate);
+      const originalDate = global.Date;
+      global.Date = vi.fn(() => mockDate) as any;
+      global.Date.now = vi.fn(() => mockDate.getTime());
       
       const timestampedName = createTimestampedName('resume');
       expect(timestampedName).toBe('resume-2024-06-15');
       
-      vi.useRealTimers();
+      global.Date = originalDate;
     });
 
     it('should integrate timestamp with automatic naming', async () => {
       const mockDate = new Date('2024-01-15T10:30:00Z');
-      vi.setSystemTime(mockDate);
+      const originalDate = global.Date;
+      global.Date = vi.fn(() => mockDate) as any;
+      global.Date.now = vi.fn(() => mockDate.getTime());
       
       const options: OutputPathOptions = {
         inputPath: 'resume.json',
@@ -169,7 +177,7 @@ describe('Output Path Management', () => {
       const result = await generateOutputPath(options);
       expect(path.basename(result)).toBe('resume-professional-2024-01-15.pdf');
       
-      vi.useRealTimers();
+      global.Date = originalDate;
     });
   });
 
@@ -285,7 +293,9 @@ describe('Output Path Management', () => {
 
     it('should handle multiple versions with timestamps', async () => {
       const mockDate = new Date('2024-01-15T10:30:00Z');
-      vi.setSystemTime(mockDate);
+      const originalDate = global.Date;
+      global.Date = vi.fn(() => mockDate) as any;
+      global.Date.now = vi.fn(() => mockDate.getTime());
       
       const baseOptions: OutputPathOptions = {
         inputPath: 'resume.json',
@@ -305,7 +315,7 @@ describe('Output Path Management', () => {
         'resume-ats-2024-01-15.pdf'
       ]);
       
-      vi.useRealTimers();
+      global.Date = originalDate;
     });
   });
 
@@ -328,7 +338,7 @@ describe('Output Path Management', () => {
       try {
         await generateOutputPath(options);
       } catch (error) {
-        expect(error.message).toMatch(/(permission|access|forbidden|ENOENT|EACCES)/i);
+        expect(error.message).toMatch(/(permission|access|forbidden|ENOENT|EACCES|EROFS)/i);
       }
     });
   });

@@ -42,8 +42,7 @@ describe('Optimized Performance Tests', () => {
   });
 
   afterAll(async () => {
-    // Clean up and ensure proper shutdown
-    await browserPool.shutdown();
+    // Clean up and ensure proper shutdown (don't shutdown browser pool as other tests need it)
     templateCache.clear();
     
     // Clean up test files

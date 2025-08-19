@@ -35,5 +35,14 @@ export function createUpdateCommand(): Command {
  * Main update command function for direct testing
  */
 export async function updateCommand(filePath: string, options: UpdateOptions): Promise<void> {
-  await applyUpdates(filePath, options);
+  try {
+    await applyUpdates(filePath, options);
+  } catch (error) {
+    // Ensure we always throw a proper Error object
+    if (error instanceof Error) {
+      throw error;
+    } else {
+      throw new Error(`Update failed: ${error || 'Unknown error'}`);
+    }
+  }
 }

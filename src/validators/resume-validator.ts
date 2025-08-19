@@ -64,14 +64,14 @@ export function validateResumeFile(filePath: string): unknown {
     const jsonContent = fs.readFileSync(filePath, 'utf-8');
     return validateResumeJSON(jsonContent);
   } catch (error) {
-    if (error.code === 'ENOENT') {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
       throw new (require('../utils/errors.js')).FileSystemError(
         `File not found: ${filePath}`, 
         false, 
         filePath
       );
     }
-    if (error.code === 'EACCES') {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'EACCES') {
       throw new (require('../utils/errors.js')).FileSystemError(
         `Permission denied: ${filePath}`, 
         false, 
