@@ -79,10 +79,8 @@ describe('Asset Bundling Tests', () => {
     
     const templateContent = readFileSync(templatePath, 'utf-8');
     
-    // Verify templates are embedded as strings, not file references
-    expect(templateContent).toContain('const ultraAtsTemplate =');
-    expect(templateContent).toContain('const atsTemplate =');
-    expect(templateContent).toContain('const professionalTemplate =');
+    // Verify template is embedded as string, not file references
+    expect(templateContent).toContain('const template =');
     
     // Verify no file system reads for templates
     expect(templateContent).not.toMatch(/readFile.*\.html/);
@@ -162,27 +160,19 @@ describe('Asset Bundling Tests', () => {
     const templatePath = join(__dirname, '../../src/templates/html-generator.ts');
     const templateContent = readFileSync(templatePath, 'utf-8');
     
-    // Verify all template variants are included in the bundle
-    const requiredTemplates = [
-      'ultraAtsTemplate',
-      'atsTemplate', 
-      'professionalTemplate'
-    ];
+    // Verify the single template with conditional logic is included
+    expect(templateContent).toContain('const template =');
     
-    for (const template of requiredTemplates) {
-      expect(templateContent).toContain(`const ${template} =`);
-    }
+    // Verify template contains substantial content (HTML structure)
+    const templateMatch = templateContent.match(/const template = `([^`]+)`/s);
+    expect(templateMatch).toBeTruthy();
     
-    // Verify templates contain substantial content
-    const templateSizes = {
-      ultraAts: templateContent.match(/const ultraAtsTemplate = `([^`]+)`/s)?.[1]?.length || 0,
-      ats: templateContent.match(/const atsTemplate = `([^`]+)`/s)?.[1]?.length || 0,
-      professional: templateContent.match(/const professionalTemplate = `([^`]+)`/s)?.[1]?.length || 0
-    };
+    const templateSize = templateMatch?.[1]?.length || 0;
+    expect(templateSize).toBeGreaterThan(3000);
     
-    expect(templateSizes.ultraAts).toBeGreaterThan(1000);
-    expect(templateSizes.ats).toBeGreaterThan(2000);
-    expect(templateSizes.professional).toBeGreaterThan(3000);
+    // Verify template supports conditional ATS mode
+    expect(templateContent).toContain('{{#unless atsMode}}');
+    expect(templateContent).toContain('atsMode: options.atsMode');
   });
 
   it('should have deterministic asset loading', async () => {

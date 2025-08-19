@@ -112,8 +112,12 @@ describe('PDF Generator', () => {
     });
 
     it('should generate default filename when no output specified', async () => {
-      // This test will need to be updated once we implement the actual behavior
-      await expect(generatePDF(sampleResume, {})).resolves.not.toThrow();
+      const result = await generatePDF(sampleResume, {});
+      expect(result).toBe('resume.pdf');
+      
+      // Verify the file was actually created
+      const stats = await fs.stat('resume.pdf');
+      expect(stats.isFile()).toBe(true);
     });
   });
 });

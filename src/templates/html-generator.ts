@@ -181,6 +181,7 @@ const template = `<!DOCTYPE html>
 <body>
   <header>
     <h1>{{basics.name}}</h1>
+    {{#if basics.label}}<p style="text-align: center; margin: 5px 0 15px 0; font-size: 14pt; font-weight: bold; color: #000;">{{basics.label}}</p>{{/if}}
     <div class="contact-info">
       {{#if basics.location.city}}<span>{{basics.location.city}}{{#if basics.location.region}}, {{basics.location.region}}{{/if}}</span>{{/if}}
       {{#if basics.email}}<span><strong>Email:</strong> {{basics.email}}</span>{{/if}}
@@ -268,9 +269,10 @@ const template = `<!DOCTYPE html>
 
 
 export async function generateHTML(resumeData: unknown, options: PDFOptions = {}): Promise<string> {
-  // Always use the single template
+  // Always use the single template but cache by template name for stats
   const templateSource = template;
-  const cacheKey = 'default';
+  const templateName = options.template || 'ats-optimized';
+  const cacheKey = templateName === 'professional' ? 'professional' : 'default';
   
   // Get compiled template from cache
   const compiledTemplate = templateCache.getTemplate(cacheKey, templateSource);

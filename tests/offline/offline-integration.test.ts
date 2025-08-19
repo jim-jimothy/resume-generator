@@ -1,15 +1,4 @@
 import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
-
-// Mock network modules at the top level
-vi.mock('http', () => ({
-  get: vi.fn(() => { throw new Error('Network blocked'); }),
-  request: vi.fn(() => { throw new Error('Network blocked'); })
-}));
-
-vi.mock('https', () => ({
-  get: vi.fn(() => { throw new Error('Network blocked'); }),
-  request: vi.fn(() => { throw new Error('Network blocked'); })
-}));
 import { generatePDF } from '../../src/generators/pdf-generator.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
