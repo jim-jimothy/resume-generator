@@ -140,3 +140,9 @@ vite.config.ts.timestamp-*
 
 # IDE files
 .idea/
+
+# pdf
+*.pdf
+
+# Personal resume data (keep example file)
+resume-data.json
