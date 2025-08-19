@@ -1,4 +1,15 @@
 import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
+
+// Mock network modules at the top level
+vi.mock('http', () => ({
+  get: vi.fn(() => { throw new Error('Network blocked'); }),
+  request: vi.fn(() => { throw new Error('Network blocked'); })
+}));
+
+vi.mock('https', () => ({
+  get: vi.fn(() => { throw new Error('Network blocked'); }),
+  request: vi.fn(() => { throw new Error('Network blocked'); })
+}));
 import { generatePDF } from '../../src/generators/pdf-generator.js';
 import { promises as fs } from 'fs';
 import { join } from 'path';
@@ -37,24 +48,6 @@ describe('Complete Offline Integration Tests', () => {
   });
 
   it('should work completely offline (airplane mode simulation)', async () => {
-    // Mock all network-related Node.js modules
-    const networkMocks = {
-      http: vi.fn(),
-      https: vi.fn(),
-      dns: vi.fn(),
-      net: vi.fn()
-    };
-
-    // Block all network access at the module level
-    vi.mock('http', () => ({
-      get: vi.fn(() => { throw new Error('Network blocked'); }),
-      request: vi.fn(() => { throw new Error('Network blocked'); })
-    }));
-
-    vi.mock('https', () => ({
-      get: vi.fn(() => { throw new Error('Network blocked'); }),
-      request: vi.fn(() => { throw new Error('Network blocked'); })
-    }));
 
     // Override global fetch
     const originalFetch = global.fetch;

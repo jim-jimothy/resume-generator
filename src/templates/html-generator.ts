@@ -7,9 +7,21 @@ import { templateCache } from '../utils/template-cache.js';
 handlebars.registerHelper('formatDate', (dateString: string) => {
   if (!dateString) return 'Present';
   
-  // Parse date string manually to avoid timezone issues
-  const [year, month, day] = dateString.split('-').map(Number);
-  const date = new Date(year, month - 1, day); // month - 1 because Date expects 0-indexed months
+  // Handle both simple YYYY-MM-DD format and ISO datetime strings
+  let date: Date;
+  if (dateString.includes('T')) {
+    // ISO datetime format - just use Date constructor
+    date = new Date(dateString);
+  } else {
+    // Simple YYYY-MM-DD format - parse manually to avoid timezone issues
+    const [year, month, day] = dateString.split('-').map(Number);
+    date = new Date(year, month - 1, day); // month - 1 because Date expects 0-indexed months
+  }
+  
+  // Check if date is valid
+  if (isNaN(date.getTime())) {
+    return 'Invalid Date';
+  }
   
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
 });
@@ -17,9 +29,20 @@ handlebars.registerHelper('formatDate', (dateString: string) => {
 handlebars.registerHelper('formatYear', (dateString: string) => {
   if (!dateString) return '';
   
-  // Parse date string manually to avoid timezone issues
-  const [year] = dateString.split('-').map(Number);
-  return year.toString();
+  // Handle both simple YYYY-MM-DD format and ISO datetime strings
+  let date: Date;
+  if (dateString.includes('T')) {
+    date = new Date(dateString);
+  } else {
+    const [year] = dateString.split('-').map(Number);
+    return year.toString();
+  }
+  
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+  
+  return date.getFullYear().toString();
 });
 
 handlebars.registerHelper('join', function(array: string[], separator: string | object = ', ') {
@@ -58,7 +81,7 @@ const template = `<!DOCTYPE html>
       margin: 0.5in;
     }
     body {
-      font-family: 'Times New Roman', Times, serif;
+      font-family: Arial, sans-serif;
       font-size: 11pt;
       line-height: 1.3;
       color: #000;
@@ -78,9 +101,9 @@ const template = `<!DOCTYPE html>
       font-size: 12pt; 
       font-weight: bold;
       margin: 16px 0 8px 0; 
-      text-transform: uppercase;
+      {{#unless atsMode}}text-transform: uppercase;
       border-bottom: 1px solid #000; 
-      padding-bottom: 2px;
+      padding-bottom: 2px;{{/unless}}
       color: #000;
     }
     h3 { 
@@ -105,9 +128,9 @@ const template = `<!DOCTYPE html>
       margin-bottom: 12px; 
     }
     .job-header {
-      display: flex;
+      {{#unless atsMode}}display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: baseline;{{/unless}}
       margin-bottom: 2px;
     }
     .job-title { 
@@ -169,7 +192,7 @@ const template = `<!DOCTYPE html>
 
   {{#if work}}
   <section>
-    <h2>Experience</h2>
+    <h2>Work Experience</h2>
     {{#each work}}
     <div class="work-entry">
       <div class="job-header">
