@@ -1,0 +1,133 @@
+{
+  "basics": {
+    "name": "Patrick Morris",
+    "email": "pbmorris93@icloud.com",
+    "phone": "+1 (662) 889-2301",
+    "summary": "Senior Software Engineer — .NET, Azure, Kubernetes, Event-Driven Systems"
+  },
+  "work": [
+    {
+      "name": "Aware",
+      "position": "Software Engineer III",
+      "startDate": "2021-11-01",
+      "summary": "Backend-focused engineer building event-driven services, data pipelines, and product features on a Kubernetes-based stack.",
+      "highlights": [
+        "Migrate C# services from a monolith to microservices with separate repos; own CI/CD using Azure DevOps and Flux with unit-test automation and API schema validation, reducing deployment time by 65%.",
+        "Build event-driven microservices on AKS using Azure Event Hubs and Azure Data Explorer for near real-time sentiment and toxicity insights, processing 2M+ events daily with 99.9% uptime.",
+        "Integrate sensitive-data models via C# services, RabbitMQ, Cosmos DB, and Azure Blob Storage to surface potential PII risks, improving detection accuracy by 40% and reducing false positives by 25%.",
+        "Ship e-discovery features using Elasticsearch and UI features in React and TypeScript, enabling search across 10TB+ of data with sub-second response times.",
+        "Operate production services with Grafana and New Relic; participate in on-call rotations to reduce mean time to restore from 4 hours to 45 minutes.",
+        "Prototype an anomaly-detection service during a hackathon and apply its design patterns in production services, achieving 92% accuracy in threat detection."
+      ],
+      "location": "Columbus, OH (Remote)"
+    },
+    {
+      "name": "Paccar",
+      "position": "Software Engineer II",
+      "startDate": "2018-03-01",
+      "endDate": "2021-11-30",
+      "summary": "Developed manufacturing systems and internal tools with a focus on real-time visibility, throughput, and reliability.",
+      "highlights": [
+        "Led development of a C# bill-of-process service enabling real-time station updates, improving production throughput by 18% and reducing unplanned downtime by 35%.",
+        "Built a real-time production monitoring application using C#, Blazor, and SQL Server, providing visibility across 12 production lines and reducing incident response time by 50%.",
+        "Created an employee credit dispersal/redemption application to encourage SOP adherence, resulting in 28% improvement in safety compliance scores.",
+        "Introduced CI/CD with Azure DevOps and Octopus Deploy to streamline releases, reducing deployment time from 4 hours to 20 minutes and eliminating 95% of deployment errors.",
+        "Led a proof-of-concept to migrate on-prem applications to Azure, achieving 30% cost reduction and 99.95% uptime improvement.",
+        "Provided on-call support and troubleshooting across manufacturing systems, maintaining 99.2% system availability across 24/7 operations."
+      ],
+      "location": "Columbus, MS"
+    },
+    {
+      "name": "ChartLocal Digital Agency",
+      "position": "Software Developer",
+      "startDate": "2016-09-01",
+      "endDate": "2018-03-31",
+      "summary": "Performed bespoke web development and hosting/SEO for regional clients while mentoring junior developers.",
+      "highlights": [
+        "Designed and developed custom websites and web applications using PHP and C#, delivering 25+ projects with 98% client satisfaction rate.",
+        "Implemented features for custom e-commerce sites in C#, increasing average client conversion rates by 32% and reducing cart abandonment by 24%.",
+        "Owned client requirements, delivery, and handoff for tailored solutions, maintaining 100% on-time delivery rate across 18-month tenure.",
+        "Improved search rankings and visibility through targeted SEO efforts, achieving average 45% increase in organic traffic and 60% improvement in search rankings.",
+        "Configured and hosted secure, reliable Apache environments, maintaining 99.8% uptime across 50+ client sites with zero security incidents."
+      ],
+      "location": "Columbus, MS (Remote)"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Mississippi University for Women",
+      "area": "Management Information Systems",
+      "studyType": "BS",
+      "endDate": "2017-05-01"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Core Competencies",
+      "keywords": [
+        "System Architecture",
+        "Microservices Design",
+        "Migrations",
+        "Incident Response",
+        "Technical Mentoring",
+        "Event-Driven Systems"
+      ]
+    },
+    {
+      "name": "Development",
+      "keywords": [
+        "C# (.NET/.NET Core)",
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Blazor",
+        "SQL",
+        "KQL",
+        "REST",
+        "gRPC"
+      ]
+    },
+    {
+      "name": "Cloud & Infrastructure",
+      "keywords": [
+        "Azure",
+        "Azure Event Hubs",
+        "Azure Blob Storage",
+        "Kubernetes (AKS)",
+        "Cosmos DB",
+        "Elasticsearch",
+        "Terraform",
+        "RabbitMQ"
+      ]
+    },
+    {
+      "name": "Data & Analytics",
+      "keywords": [
+        "Azure Data Explorer",
+        "SQL Server",
+        "PostgreSQL",
+        "Real-time Analytics"
+      ]
+    },
+    {
+      "name": "DevOps & QA",
+      "keywords": [
+        "Azure DevOps",
+        "CI/CD Pipelines",
+        "Flux",
+        "Octopus Deploy",
+        "NUnit",
+        "xUnit",
+        "Postman",
+        "K6"
+      ]
+    },
+    {
+      "name": "Observability",
+      "keywords": [
+        "Grafana",
+        "New Relic"
+      ]
+    }
+  ]
+}
