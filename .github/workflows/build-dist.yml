@@ -1,0 +1,53 @@
+---
+name: Build dist
+
+# The repo ships a prebuilt dist/index.js so `bun install -g github:...` works
+# without a build step. This workflow keeps that committed bundle in sync:
+# whenever source changes, it rebuilds and commits dist/index.js back to main.
+#
+# Loop safety: the path filter below intentionally excludes dist/, so the bot's
+# own dist-only commit can't re-trigger this workflow. (Pushes made with
+# GITHUB_TOKEN also don't trigger further workflow runs.)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'build.mjs'
+      - 'package.json'
+      - 'bun.lock'
+  workflow_dispatch:  # allow manual "Run workflow" / `gh workflow run`
+
+permissions:
+  contents: write
+
+jobs:
+  build-dist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: NODE_ENV=production bun run build
+
+      - name: Commit rebuilt dist if it changed
+        run: |
+          if git diff --quiet -- dist/index.js; then
+            echo "dist/index.js is already up to date — nothing to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/index.js
+          git commit -m "chore: rebuild dist [skip ci]"
+          git push
